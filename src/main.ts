@@ -52,5 +52,5 @@ export const SWAGGER_API_CURRENT_VERSION = '1.0';
   app.useGlobalPipes(new ValidationPipe());
 
   await app.listen(9000, '0.0.0.0');
-  console.log('add sated at: 9000 port')
+  console.log(`add started at: 9000`);
 })();

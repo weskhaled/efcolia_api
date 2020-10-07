@@ -33,12 +33,13 @@ export class UserController {
   @ApiResponse({ status: 200, description: 'Fetch User Request Received' })
   @ApiResponse({ status: 400, description: 'Fetch User Request Failed' })
   async getProfile(@Param('login') login: string): Promise<User> {
-    const profile = await this.userService.getByUsername(login);
-    if (!profile) {
+    const user = await this.userService.getByUsername(login);
+    if (!user) {
       throw new BadRequestException(
-        'The profile with that username could not be found.',
+        'The user with that username could not be found.',
       );
     }
-    return profile;
+    delete user.password;
+    return user;
   }
 }

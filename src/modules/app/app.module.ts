@@ -9,6 +9,8 @@ import { ConfigService } from '../config/config.service';
 import { AuthModule } from '../auth/auth.module';
 import { WinstonModule } from '../winston/winston.module';
 import { UserModule } from '../user/user.module';
+import { ClientModule } from '../client/client.module';
+import { DeviceModule } from '../device/device.module';
 
 @Module({
   imports: [
@@ -23,7 +25,7 @@ import { UserModule } from '../user/user.module';
           username: configService.get('DB_USERNAME'),
           password: configService.get('DB_PASSWORD'),
           database: configService.get('DB_DATABASE'),
-          entities: [__dirname + '/../**/**.entity{.ts,.js}'],
+          entities: [__dirname + './../**/**.entity{.ts,.js}'],
           // synchronize: configService.isEnv('dev'),
           synchronize: false,
           keepConnectionAlive: true,
@@ -72,6 +74,8 @@ import { UserModule } from '../user/user.module';
     ConfigModule,
     AuthModule,
     UserModule,
+    ClientModule,
+    DeviceModule
   ],
   controllers: [AppController],
   providers: [AppService],
