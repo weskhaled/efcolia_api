@@ -31,13 +31,13 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    * @param {any} jwtPayload validation method for jwt token
    * @returns {Promise<object>} a object to be signed
    */
-  async validate({ iat, exp, id }: any): Promise<object> {
+  async validate({ iat, exp, user_id }: any): Promise<object> {
     const timeDiff = exp - iat;
     if (timeDiff <= 0) {
       throw new UnauthorizedException();
     }
 
-    const user = await this.userService.get(id);
+    const user = await this.userService.get(user_id);
     if (!user) {
       throw new UnauthorizedException();
     }

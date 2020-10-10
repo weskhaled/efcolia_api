@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Client } from './Client.entity';
+import { Client } from './client.entity';
 
 /**
  * Client Service
@@ -19,6 +19,6 @@ export class ClientService {
   }
 
   getAll(): Promise<Client[]> {
-    return this.clientRepository.find({take: 500, relations: ['devices'], });
+    return this.clientRepository.find({ take: 100 });
   }
 }

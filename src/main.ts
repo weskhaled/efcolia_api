@@ -3,8 +3,8 @@ import {
   FastifyAdapter,
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
-// import * as headers from 'fastify-helmet';
-// import * as fastifyRateLimiter from 'fastify-rate-limit';
+import * as headers from 'fastify-helmet';
+import * as fastifyRateLimiter from 'fastify-rate-limit';
 import { AppModule } from './modules/app/app.module';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -32,8 +32,7 @@ export const SWAGGER_API_CURRENT_VERSION = '1.0';
 
 (async () => {
   const app = await NestFactory.create<NestFastifyApplication>(
-    AppModule,
-    new FastifyAdapter(),
+    AppModule
   );
   const options = new DocumentBuilder()
     .setTitle(SWAGGER_API_NAME)
@@ -43,7 +42,22 @@ export const SWAGGER_API_CURRENT_VERSION = '1.0';
     .build();
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup(SWAGGER_API_ROOT, app, document);
-  app.enableCors();
+  const cors = {
+    origin: [
+      'http://localhost:4200',
+      'http://localhost:8080',
+      'http://localhost',
+      'https://efcolia-front.vercel.app',
+      'http://107.155.162.18:3001',
+      '*',
+    ],
+    methods: 'GET, HEAD, PUT, PATCH, POST, DELETE, OPTIONS',
+    preflightContinue: false,
+    optionsSuccessStatus: 204,
+    credentials: true,
+    allowedHeaders: ['Accept', 'Content-Type', 'Authorization'],
+  };
+  app.enableCors(cors);
   // app.register();
   // app.register(fastifyRateLimiter, {
   //   max: 100,
@@ -51,6 +65,6 @@ export const SWAGGER_API_CURRENT_VERSION = '1.0';
   // });
   app.useGlobalPipes(new ValidationPipe());
 
-  await app.listen(9000, '0.0.0.0');
-  console.log(`add started at: 9000`);
+  await app.listen(3000, '0.0.0.0');
+  console.log(`add started at: 3000`);
 })();

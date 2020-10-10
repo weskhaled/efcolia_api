@@ -10,9 +10,7 @@ import { Client } from '../client/client.entity';
 /**
  * Device Entity Class
  */
-@Entity({
-  name: 'device',
-})
+@Entity('device')
 export class Device {
   /**
    * ID column

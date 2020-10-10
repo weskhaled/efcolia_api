@@ -10,7 +10,7 @@
     "start": "ts-node -r tsconfig-paths/register src/main.ts",
     "start:dev": "nodemon",
     "start:debug": "nodemon --config nodemon-debug.json",
-    "start:prod": "node dist/main.js",
+    "start:prod": "set WEBTOKEN_SECRET_KEY=uAsBw6WxqD set WEBTOKEN_EXPIRATION_TIME=2400000 set DB_TYPE=mysql set DB_USERNAME=Efcodev set DB_PASSWORD=afs34!eMS set DB_HOST=89.31.146.196 set DB_PORT=3307 set DB_DATABASE=efcoliav2_dev && node dist/main.js",
     "typedocs": "npx compodoc -p tsconfig.json -s -d docs",
     "lint": "tslint -p tsconfig.json -c tslint.json",
     "test": "jest",

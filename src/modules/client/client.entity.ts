@@ -3,9 +3,7 @@ import { Device } from '../device/device.entity';
 /**
  * Profile Entity Class
  */
-@Entity({
-  name: 'client',
-})
+@Entity('client')
 export class Client {
   /**
    * ID column

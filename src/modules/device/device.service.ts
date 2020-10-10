@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 
-import { Device } from './Device.entity';
+import { Device } from './device.entity';
 
 /**
  * Client Service
@@ -18,7 +18,11 @@ export class DeviceService {
     return this.deviceRepository.findOne(device_id);
   }
 
+  getDevicesByClientId(client_id: number): Promise<Device[]> {
+    return this.deviceRepository.find({where: { client_id }, take: 100 });
+  }
+
   getAll(): Promise<Device[]> {
-    return this.deviceRepository.find({ take: 500 });
+    return this.deviceRepository.find({ take: 100 });
   }
 }

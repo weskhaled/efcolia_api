@@ -37,6 +37,7 @@ export class AppController {
   @ApiResponse({ status: 200, description: 'User Metadata Request Completed' })
   @ApiResponse({ status: 400, description: 'User Metadata Request Failed' })
   getRequestUser(@Req() req): Partial<Request> {
+    console.log(req.user)
     return req.user;
   }
 }

@@ -19,6 +19,20 @@ import { Client } from './client.entity';
 export class ClientController {
   constructor(private readonly clientService: ClientService) {}
 
+  @Get()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({ status: 200, description: 'Fetch Clients Request Received' })
+  @ApiResponse({ status: 400, description: 'Fetch Clients Request Failed' })
+  async getClients(): Promise<Client[]> {
+    const clients = await this.clientService.getAll();
+    if (!clients) {
+      throw new BadRequestException(
+        'The clients could not be found.',
+      );
+    }
+    return clients;
+  }
+
   @Get(':client_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({ status: 200, description: 'Fetch Client Request Received' })
@@ -31,19 +45,5 @@ export class ClientController {
       );
     }
     return client;
-  }
-
-  @Get('getAll')
-  @UseGuards(AuthGuard('jwt'))
-  @ApiResponse({ status: 200, description: 'Fetch Clients Request Received' })
-  @ApiResponse({ status: 400, description: 'Fetch Clients Request Failed' })
-  async getClients(): Promise<Client[]> {
-    const clients = await this.clientService.getAll();
-    if (!clients) {
-      throw new BadRequestException(
-        'The client could not be found.',
-      );
-    }
-    return clients;
   }
 }

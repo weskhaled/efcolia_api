@@ -19,12 +19,26 @@ import { Device } from './device.entity';
 export class DeviceController {
   constructor(private readonly deviceService: DeviceService) {}
 
-  @Get(':client_id')
+  @Get()
+  @UseGuards(AuthGuard('jwt'))
+  @ApiResponse({ status: 200, description: 'Fetch Devices Request Received' })
+  @ApiResponse({ status: 400, description: 'Fetch Devices Request Failed' })
+  async getDevices(): Promise<Device[]> {
+    const devices = await this.deviceService.getAll();
+    if (!devices) {
+      throw new BadRequestException(
+        'The device could not be found.',
+      );
+    }
+    return devices;
+  }
+
+  @Get(':device_id')
   @UseGuards(AuthGuard('jwt'))
   @ApiResponse({ status: 200, description: 'Fetch Device Request Received' })
   @ApiResponse({ status: 400, description: 'Fetch Device Request Failed' })
-  async getClient(@Param('client_id') client_id: number): Promise<Device> {
-    const device = await this.deviceService.get(client_id);
+  async getDevice(@Param('device_id') device_id: number): Promise<Device> {
+    const device = await this.deviceService.get(device_id);
     if (!device) {
       throw new BadRequestException(
         'The device could not be found.',
@@ -32,18 +46,18 @@ export class DeviceController {
     }
     return device;
   }
-
-  @Get('getAll')
+  
+  @Get('byClientId/:client_id')
   @UseGuards(AuthGuard('jwt'))
-  @ApiResponse({ status: 200, description: 'Fetch Clients Request Received' })
-  @ApiResponse({ status: 400, description: 'Fetch Clients Request Failed' })
-  async getClients(): Promise<Device[]> {
-    const clients = await this.deviceService.getAll();
-    if (!clients) {
+  @ApiResponse({ status: 200, description: 'Fetch Device by client_id Request Received' })
+  @ApiResponse({ status: 400, description: 'Fetch Device by client_id Request Failed' })
+  async getDeviceByClientId(@Param('client_id') client_id: number): Promise<Device[]> {
+    const devices = await this.deviceService.getDevicesByClientId(client_id);
+    if (!devices) {
       throw new BadRequestException(
         'The device could not be found.',
       );
     }
-    return clients;
+    return devices;
   }
 }
