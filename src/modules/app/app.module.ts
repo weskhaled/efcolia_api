@@ -11,6 +11,7 @@ import { WinstonModule } from '../winston/winston.module';
 import { UserModule } from '../user/user.module';
 import { ClientModule } from '../client/client.module';
 import { DeviceModule } from '../device/device.module';
+import { DeviceStateModule } from '../deviceState/deviceState.module';
 
 @Module({
   imports: [
@@ -75,7 +76,8 @@ import { DeviceModule } from '../device/device.module';
     AuthModule,
     UserModule,
     ClientModule,
-    DeviceModule
+    DeviceModule,
+    DeviceStateModule
   ],
   controllers: [AppController],
   providers: [AppService],

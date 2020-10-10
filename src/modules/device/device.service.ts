@@ -19,7 +19,7 @@ export class DeviceService {
   }
 
   getDevicesByClientId(client_id: number): Promise<Device[]> {
-    return this.deviceRepository.find({where: { client_id }, take: 100 });
+    return this.deviceRepository.find({where: { client_id }, relations:['deviceState'], take: 100 });
   }
 
   getAll(): Promise<Device[]> {

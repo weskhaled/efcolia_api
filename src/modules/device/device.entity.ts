@@ -3,9 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
+  OneToOne,
   JoinColumn,
 } from 'typeorm';
 import { Client } from '../client/client.entity';
+import { DeviceState } from '../deviceState/deviceState.entity';
 
 /**
  * Device Entity Class
@@ -45,4 +47,8 @@ export class Device {
   @ManyToOne(() => Client, client => client.devices)
   @JoinColumn({ name: 'client_id' })
   client!: Client
+
+  @OneToOne(() => DeviceState, deviceState => deviceState.device)
+  @JoinColumn({ name: 'device_id' })
+  deviceState!: DeviceState
 }
